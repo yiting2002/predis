@@ -46,6 +46,8 @@ abstract class ClusterStrategy implements StrategyInterface
             'EXISTS' => $getKeyFromAllArguments,
             'DEL' => $getKeyFromAllArguments,
             'TYPE' => $getKeyFromFirstArgument,
+            'RENAME' => $getKeyFromAllArguments,
+            'RENAMENX' => $getKeyFromAllArguments,
             'EXPIRE' => $getKeyFromFirstArgument,
             'EXPIREAT' => $getKeyFromFirstArgument,
             'PERSIST' => $getKeyFromFirstArgument,
@@ -56,6 +58,7 @@ abstract class ClusterStrategy implements StrategyInterface
             'SORT' => array($this, 'getKeyFromSortCommand'),
             'DUMP' => $getKeyFromFirstArgument,
             'RESTORE' => $getKeyFromFirstArgument,
+            'OBJECT' => array($this, 'getKeyFromSecondArgument'),
 
             /* commands operating on string values */
             'APPEND' => $getKeyFromFirstArgument,
@@ -229,6 +232,18 @@ abstract class ClusterStrategy implements StrategyInterface
     protected function getKeyFromFirstArgument(CommandInterface $command)
     {
         return $command->getArgument(0);
+    }
+
+    /**
+     * Extracts the key from the second argument of a command instance.
+     *
+     * @param CommandInterface $command Command instance.
+     *
+     * @return string
+     */
+    protected function getKeyFromSecondArgument(CommandInterface $command)
+    {
+        return $command->getArgument(1);
     }
 
     /**
