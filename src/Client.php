@@ -16,6 +16,7 @@ use Predis\Command\RawCommand;
 use Predis\Command\ScriptCommand;
 use Predis\Configuration\Options;
 use Predis\Configuration\OptionsInterface;
+use Predis\Connection\Aggregate\ClusterInterface;
 use Predis\Connection\AggregateConnectionInterface;
 use Predis\Connection\ConnectionInterface;
 use Predis\Connection\ParametersInterface;
@@ -271,6 +272,26 @@ class Client implements ClientInterface, \IteratorAggregate
         }
 
         return $this->connection->getConnectionById($connectionID);
+    }
+
+    /**
+     * Retrieves the specified connection from the cluster connection using a key.
+     *
+     * @param string $key Key string.
+     *
+     * @throws NotSupportedException
+     *
+     * @return Connection\NodeConnectionInterface
+     */
+    public function getConnectionByKey($key)
+    {
+        if (!$this->connection instanceof ClusterInterface) {
+            throw new NotSupportedException(
+                'Retrieving connections by KEY is supported only by cluster connections.'
+            );
+        }
+
+        return $this->connection->getConnectionByKey($key);
     }
 
     /**

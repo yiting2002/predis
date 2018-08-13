@@ -429,6 +429,15 @@ class RedisCluster implements ClusterInterface, \IteratorAggregate, \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getConnectionByKey($key)
+    {
+        $slot = $this->strategy->getSlotByKey($key);
+        return $this->getConnectionBySlot($slot);
+    }
+
+    /**
      * Returns a random connection from the pool.
      *
      * @return NodeConnectionInterface|null

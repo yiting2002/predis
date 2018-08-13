@@ -21,4 +21,12 @@ use Predis\Connection\AggregateConnectionInterface;
  */
 interface ClusterInterface extends AggregateConnectionInterface
 {
+    /**
+     * Returns a connection instance from the cluster connection using a key.
+     *
+     * @param string $key Key string.
+     *
+     * @return NodeConnectionInterface|null
+     */
+    public function getConnectionByKey($key);
 }

@@ -150,11 +150,7 @@ class PredisCluster implements ClusterInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * Retrieves a connection instance from the cluster using a key.
-     *
-     * @param string $key Key string.
-     *
-     * @return NodeConnectionInterface
+     * {@inheritdoc}
      */
     public function getConnectionByKey($key)
     {
